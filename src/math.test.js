@@ -46,3 +46,76 @@ describe('isPrime', function () {
         }
     );
 });
+
+describe('sumPrime', function () {
+
+test('Test sumPrime < 0 => throw exception', () => {
+        expect(() => { Util.sumPrime(-10) }).toThrow('Unable to compute sumPrime for n < 0');
+    });
+
+test.each([
+        [2, 2],
+        [5, 10],
+        [6, 10],
+        [8, 17],
+    ])(
+        'sumPrime %i equals to %i',
+        (n, expected) => {
+            expect(Util.sumPrime(n)).toBe(expected);
+        }
+    );
+
+});
+
+
+describe('fizzBuzz', function () {
+
+test('Test fizzBuzz < 0 => throw exception', () => {
+        expect(() => { Util.fizzBuzz(-10) }).toThrow('Unable to compute fizzBuzz for n < 1');
+    });
+
+test.each([
+        [5, [1, 2, "Fizz", 4, "Buzz"]],
+        [15, [1, 2, "Fizz", 4, "Buzz", "Fizz", 7, 8, "Fizz", "Buzz", 11, "Fizz", 13, 14, "FizzBuzz"]],
+    ])(
+        'fizzBuzz %i equals to %i',
+        (n, expected) => {
+            expect(Util.fizzBuzz(n)).toStrictEqual(expected);
+        }
+    );
+
+});
+
+describe('cipher', function () {
+
+test('Test cipher phrase not string throw exception', () => {
+        expect(() => { Util.cipher(1) }).toThrow('Unable to compute cipher for phrase not string');
+    });
+
+test.each([
+        ["Test Unitaire", "Uftu Vojubjsf"],
+        ["non","opo"],
+    ])(
+        'cipher "%s" equals to "%s"',
+        (n, expected) => {
+            expect(Util.cipher(n)).toStrictEqual(expected);
+        }
+    );
+
+});
+
+describe('pairs', function () {
+
+test.each([
+        [[3,3], 1],
+        [[3,3,5,],1],
+	[[3,3,5,5,5],4],
+    ])(
+        'pairs %d equals to %i',
+        (n, expected) => {
+            expect(Util.pairs(n)).toStrictEqual(expected);
+        }
+    );
+
+});
+

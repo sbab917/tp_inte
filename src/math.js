@@ -47,7 +47,18 @@ Util.isPrime = function (n) {
  * @returns {number}
  */
 Util.sumPrime = function(n) {
-
+	var res=0;	
+	if(n>=2){
+		for(var i=2; i<=n;i++){
+			if(Util.isPrime(i)){
+				res+=i;			
+			}
+		}
+	}
+	if(n<0){
+		throw 'Unable to compute sumPrime for n < 0'	
+	}
+	return res;
 };
 
 /**
@@ -63,7 +74,17 @@ Util.sumPrime = function(n) {
  * @returns {array}
  */
 Util.fizzBuzz = function(n) {
-
+	var tabRes=[];
+	if(n<1){
+		throw 'Unable to compute fizzBuzz for n < 1';	
+	}
+	for (var i=1; i <= n; i++){
+    		if (i % 15 == 0) tabRes.push('FizzBuzz');
+    		else if (i % 3 == 0) tabRes.push("Fizz");
+    		else if (i % 5 == 0) tabRes.push("Buzz");
+    		else tabRes.push(i);
+	}
+	return tabRes;
 };
 
 /**
@@ -76,9 +97,39 @@ Util.fizzBuzz = function(n) {
  * @returns {string}
  */
 Util.cipher = function (phrase) {
-
+	if(typeof phrase !='string') throw 'Unable to compute cipher for phrase not string';	
+	var res ="";
+	for(let i=0; i< phrase.length;i++){
+		if(phrase[i] !=" ") res+=String.fromCharCode(phrase[i].charCodeAt(0) + 1);
+		else res+=" ";
+	}
+	return res;
 };
 
+/**
+ * Retourne le nombre de paires dans un tableau
+ *
+ * Exp :
+ *
+ * Util.pairs([3,3]) => 1
+ * Util.pairs([3,3,5,]) => 1
+ * Util.pairs([3,3,5,5,5]) => 4
+ *
+ * @param array
+ * @return int
+ */
+Util.pairs = function(array) {
+	let res=0;
+	for(let i=0; i<array.length;i++){
+		let variable=array[i];	
+		for(let j=i+1; j<array.length;j++){
+			if(variable==array[j]){
+				res++;			
+			}
+		}	
+	}
+	return res;
+};
 
 module.exports = Util;
 
