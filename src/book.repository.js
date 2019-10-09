@@ -35,7 +35,16 @@ class BookRepository {
   * Retourne un livre
   */
   getBookByName(bookName) {
-
+    if(typeof bookName != typeof "") {
+      throw 'Unable to compute getBookByName. Given bookname is not a String';
+    }
+    let result = this.db.get('books').find({name : bookName}).value();
+    if(result != null){
+      return result;
+    }
+    else{
+      return 'Given name is not found';
+    }
   }
 
   /**
