@@ -38,3 +38,47 @@ describe('Book repository get total price', function () {
     expect(repository.getTotalPrice()).toBe(19.2);
   });
 });
+
+describe('Book repository book by name', function () {
+  test('Return a book with a given name', () => {
+    let bookTest = {
+      "books":
+      [
+        {
+          "id": 3,
+          "name": "Harry Potter",
+          "price": 6.7,
+          "added_at": "2019-03-01"
+        }
+      ]
+    };
+    const dbMock = {
+      get : jest.fn().mockReturnThis(),
+      find : jest.fn().mockReturnThis(),
+      value : jest.fn().mockReturnValue(bookTest)
+    };
+    const repository = new BookRepository(dbMock);
+    expect(repository.getBookByName("Harry Potter")).toBe(bookTest);
+  });
+
+  test('Return an exception because the value is not a String', () => {
+      const dbMock = {
+          get : jest.fn().mockReturnThis(),
+          find : jest.fn().mockReturnThis(),
+          value : jest.fn().mockReturnValue([])
+
+      };
+      const repository = new BookRepository(dbMock);
+      expect(function () {repository.getBookByName(3)}).toThrow('Unable to compute getBookByName. Given bookname is not a String');
+  });
+
+  test('Return a message that announced that the book is not in the database', () => {
+        const dbMock = {
+            get : jest.fn().mockReturnThis(),
+            find : jest.fn().mockReturnThis(),
+            value : jest.fn().mockReturnValue(null)
+        };
+        const repository = new BookRepository(dbMock);
+        expect(repository.getBookByName("Amos Daragon")).toBe('Given name is not found');
+      });
+});
