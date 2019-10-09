@@ -111,7 +111,7 @@ test.each([
         [[3,3,5,],1],
 	[[3,3,5,5,5],4],
     ])(
-        'pairs %d equals to %i',
+        'pairs %s equals to %i',
         (n, expected) => {
             expect(Util.pairs(n)).toStrictEqual(expected);
         }
