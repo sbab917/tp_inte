@@ -12,6 +12,7 @@ describe('overlaps', function () {
         expect(intervalGeneral.overlaps(interval)).toBe(false)
     });
 });
+
 describe('includes', function () {
     let intervalGeneral = new Interval(4,8);
     test('Test interval with total inclusion send true', () => {
@@ -30,4 +31,39 @@ describe('includes', function () {
 	let interval = new Interval(1,5);
         expect(intervalGeneral.includes(interval)).toBe(false);
     });
+});
+
+describe('union', function () {
+    let intervalGeneral = new Interval(4,8);
+
+    test('Test interval if union is true', () => {
+	let interval = new Interval(5,6);
+	let result = new Interval(4,8);
+        expect(intervalGeneral.union(interval)).toStrictEqual(result);
+    });
+
+    test('Test interval if union is true with separate interval', () => {
+	let interval = new Interval(1,4);
+	let result = new Interval(1,8);
+        expect(intervalGeneral.union(interval)).toStrictEqual(result);
+    });
+    
+    test('Test interval union if interval2 is bigger than interval1', () => {
+	let interval = new Interval(1,14);
+	let result = new Interval(1,14);
+        expect(intervalGeneral.union(interval)).toStrictEqual(result);
+    });
+
+    test('Test interval if union is true with separate interval', () => {
+	let interval = new Interval(1,3);
+	let result = [interval,intervalGeneral];
+        expect(intervalGeneral.union(interval)).toStrictEqual(result);
+    });
+
+    test('Test interval if union is true with separate interval', () => {
+	let interval = new Interval(10,40);
+	let result = [intervalGeneral,interval];
+        expect(intervalGeneral.union(interval)).toStrictEqual(result);
+    });
+
 });
