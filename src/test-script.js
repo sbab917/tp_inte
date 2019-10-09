@@ -10,4 +10,4 @@ const repository = new BookRepository(db);
     'price' :6.1,
     "added_at" : '2019-01-01'
 });*/
-console.log(repository.getTotalCount())
+console.log(repository.getTotalPrice())
