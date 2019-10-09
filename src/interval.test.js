@@ -2,7 +2,6 @@ const Interval = require('./interval');
 
 describe('overlaps', function () {
     let intervalGeneral = new Interval(5,6);
-
     test('Test interval overlaps true', () => {
 	let interval = new Interval(5,6);
         expect(intervalGeneral.overlaps(interval)).toBe(true)
@@ -35,35 +34,57 @@ describe('includes', function () {
 
 describe('union', function () {
     let intervalGeneral = new Interval(4,8);
-
     test('Test interval if union is true', () => {
 	let interval = new Interval(5,6);
 	let result = new Interval(4,8);
         expect(intervalGeneral.union(interval)).toStrictEqual(result);
     });
-
     test('Test interval if union is true with separate interval', () => {
 	let interval = new Interval(1,4);
 	let result = new Interval(1,8);
         expect(intervalGeneral.union(interval)).toStrictEqual(result);
     });
-    
-    test('Test interval union if interval2 is bigger than interval1', () => {
+    test('Test interval union if interval is bigger than interval1', () => {
 	let interval = new Interval(1,14);
 	let result = new Interval(1,14);
         expect(intervalGeneral.union(interval)).toStrictEqual(result);
     });
-
     test('Test interval if union is true with separate interval', () => {
 	let interval = new Interval(1,3);
 	let result = [interval,intervalGeneral];
         expect(intervalGeneral.union(interval)).toStrictEqual(result);
     });
-
     test('Test interval if union is true with separate interval', () => {
 	let interval = new Interval(10,40);
 	let result = [intervalGeneral,interval];
         expect(intervalGeneral.union(interval)).toStrictEqual(result);
     });
+});
 
+describe('intersection', function () {
+    let intervalGeneral = new Interval(4,8);
+    test('Test interval intersection with intersection2 in intersection1', () => {
+    let interval = new Interval(5,6);
+    let result = new Interval(5,6);
+        expect(intervalGeneral.intersection(interval)).toStrictEqual(result);
+    });
+    test('Test interval intersection with intersection1 in intersection2', () => {
+    let interval = new Interval(1,16);
+    let result = new Interval(4,8);
+        expect(intervalGeneral.intersection(interval)).toStrictEqual(result);
+    });
+    test('Test interval intersection with a part of intersection2 in intersection1', () => {
+    let interval = new Interval(5,10);
+    let result = new Interval(5,8);
+        expect(intervalGeneral.intersection(interval)).toStrictEqual(result);
+    });
+    test('Test interval intersection with a part of intersection1 in intersection2', () => {
+    let interval = new Interval(3,6);
+    let result = new Interval(4,6);
+        expect(intervalGeneral.intersection(interval)).toStrictEqual(result);
+    });
+    test('Test interval intersection with intersection2 and intersection1 not crossing', () => {
+    let interval = new Interval(1,4);
+        expect(intervalGeneral.intersection(interval)).toStrictEqual(null);
+    });
 });
