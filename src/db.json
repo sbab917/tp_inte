@@ -17,6 +17,18 @@
       "name": "Harry Potter",
       "price": 6.7,
       "added_at": "2019-03-01"
+    },
+    {
+      "id": 4,
+      "name": "Berserk",
+      "price": 6.4,
+      "added_at": "2019-02-01"
+    },
+    {
+      "id": 5,
+      "name": "Harry Potter",
+      "price": 6.7,
+      "added_at": "2019-04-01"
     }
   ]
 }

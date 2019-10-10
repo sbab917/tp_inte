@@ -82,3 +82,82 @@ describe('Book repository book by name', function () {
         expect(repository.getBookByName("Amos Daragon")).toBe('Given name is not found');
       });
 });
+
+describe('Book repository count book add by month', function () {
+  let bookTest = [
+    {
+      "id": 2,
+      "name": "Berserk",
+      "price": 6.4,
+      "added_at": "2019-02-01"
+    },
+    {
+      "id": 4,
+      "name": "Berserk",
+      "price": 6.4,
+      "added_at": "2019-02-01"
+    }
+  ];
+  let bookTest2 = [
+    {
+      "id": 3,
+      "name": "Harry Potter",
+      "price": 6.7,
+      "added_at": "2019-03-01"
+    },
+    {
+      "id": 5,
+      "name": "Harry Potter",
+      "price": 6.7,
+      "added_at": "2019-04-01"
+    }
+  ]
+
+    test('Count book add by month with an existing book with several exemplary on the same month', () => {
+       let expected = [ { year: '2019', month: '02', count: 2, count_cumulative: 2 } ];
+        const dbMock = {
+            get : jest.fn().mockReturnThis(),
+            filter : jest.fn().mockReturnThis(),
+            value : jest.fn().mockReturnValue(bookTest)
+        };
+        const repository = new BookRepository(dbMock);
+
+        expect(repository.getCountBookAddedByMonth("Berserk")).toStrictEqual(expected);
+    });
+
+    test('Count book add by month with an existing book with exemplary had been had on different months', () => {
+       let expected = [ { year: '2019', month: '03', count: 1, count_cumulative: 1 },
+                      { year: '2019', month: '04', count: 1, count_cumulative: 2 } ];
+        const dbMock = {
+            get : jest.fn().mockReturnThis(),
+            filter : jest.fn().mockReturnThis(),
+            value : jest.fn().mockReturnValue(bookTest2)
+        };
+        const repository = new BookRepository(dbMock);
+
+        expect(repository.getCountBookAddedByMonth("Harry Potter")).toStrictEqual(expected);
+    });
+
+    test('Return an exception because the value is not a String', () => {
+        const dbMock = {
+            get : jest.fn().mockReturnThis(),
+            filter : jest.fn().mockReturnThis(),
+            value : jest.fn().mockReturnValue(bookTest)
+        };
+        const repository = new BookRepository(dbMock);
+
+        expect(function () {repository.getCountBookAddedByMonth(2)}).toThrow('Unable to compute getCountBookAddedByMonth. Given bookname is not a String');
+    });
+
+    test('Return a message that announced that the book is not in the database', () => {
+      let expected = [];
+        const dbMock = {
+            get : jest.fn().mockReturnThis(),
+            filter : jest.fn().mockReturnThis(),
+            value : jest.fn().mockReturnValue(expected)
+        };
+        const repository = new BookRepository(dbMock);
+
+        expect(function () {repository.getCountBookAddedByMonth("Amos Daragon")}).toThrow('Given name is not found');
+    });
+});
